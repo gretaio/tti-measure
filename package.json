@@ -16,7 +16,7 @@
   ],
   "author": "",
   "license": "MIT",
-  "bin" : {
+  "bin": {
     "tti-measure": "./index.js"
   },
   "bugs": {
