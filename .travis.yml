@@ -3,12 +3,8 @@ node_js:
   - "7"
 dist: trusty
 sudo: false
-addons:
-  chrome: stable
 cache:
   directories:
     - node_modules
 script:
-  - google-chrome --headless --disable-gpu --remote-debugging-port=9222 &
-  - sleep 5
   - node index.js -u "https://greta.io"
