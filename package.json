@@ -1,0 +1,30 @@
+{
+  "name": "tti-observer",
+  "version": "0.0.1",
+  "description": "Automated, headless-able time-to-interactive measurement",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gretaio/tti-observer.git"
+  },
+  "keywords": [
+    "tti",
+    "performance"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bin" : {
+    "tti-measure": "./index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/gretaio/tti-observer/issues"
+  },
+  "homepage": "https://github.com/gretaio/tti-observer#readme",
+  "dependencies": {
+    "chrome-remote-interface": "^0.24.5",
+    "yargs": "^8.0.2"
+  }
+}
