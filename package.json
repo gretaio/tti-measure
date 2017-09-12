@@ -25,6 +25,7 @@
   "homepage": "https://github.com/gretaio/tti-observer#readme",
   "dependencies": {
     "chrome-remote-interface": "^0.24.5",
+    "puppeteer": "^0.10.2",
     "yargs": "^8.0.2"
   }
 }

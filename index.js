@@ -1,3 +1,4 @@
+const puppeteer = require('puppeteer');
 const argv = require('yargs').argv
 const ttiPolyfill = require('./tti-polyfill')
 
@@ -182,4 +183,13 @@ if (profile === '3gDsl') {
 currentProfile = profile === '3gDsl' ? '3g' : profile
 currentUrl = urls[0]
 
-require('chrome-remote-interface')(hitChrome).on('error', die)
+puppeteer.launch({
+  args: [
+    '--remote-debugging-port=9222'
+  ]
+})
+.then(async (browser) => {
+  require('chrome-remote-interface')(hitChrome).on('error', die)
+}).catch(die)
+
+
