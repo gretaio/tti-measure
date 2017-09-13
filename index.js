@@ -1,7 +1,11 @@
+const launcher = require('james-browser-launcher')
 const argv = require('yargs').argv
+const CDP = require('chrome-remote-interface')
+const sleep = require('system-sleep')
+
 const ttiPolyfill = require('./tti-polyfill')
 
-let urls, runs, target, chrome, profile
+let urls, runs, target, chrome, headless, autostart, profile
 let Page, Console, Network, client
 
 let times = {}
@@ -142,23 +146,25 @@ const help = `  Automated, headless-able time-to-interactive measurement
 
   E.g.: tti-measure -u "https://greta.io" -u "http://127.0.0.1:9999/test.html"
 
-  -u, --url      Compulsory arg    Urls to run the script on. Pass multiple -u to test multiple urls
-  -r, --runs     Default: 2        Number of runs per page
-  -t, --target   Default: 2500     Retuns non-zero if a test fails to load within the target time (ms)
-  -c, --chrome   Default: 9222     Headless chrome port
-  -v, --debug    Default: false    Log verbosity
-  -p, --profile  Default: 3gDsl    Network profile. '3gDsl' runs the tests on 3g and on dsl.
-                                   Note that profiles are currently not working in headless
-                                   Cf https://bugs.chromium.org/p/chromium/issues/detail?id=728451
+  -u, --url       Compulsory arg    Urls to run the script on. Pass multiple -u to test multiple urls
+  -r, --runs      Default: 2        Number of runs per page
+  -t, --target    Default: 5000     Retuns non-zero if a test fails to load within the target time (ms)
+  -a, --autostart Default: true     Autostart chrome
+  --headless      Default: false    Should chrome run headless
+  -cp,            Default: 9222     Chrome remote debug port
+  -v, --debug     Default: false    Log verbosity
+  -p, --profile   Default: 3gDsl    Network profile. '3gDsl' runs the tests on 3g and on dsl.
 
-  Valid network profile ['${Object.keys(networkProfiles).join("', '")}', '3gDsl']\n`
+  Valid network profiles ['${Object.keys(networkProfiles).join("', '")}', '3gDsl']\n`
 
 urls = argv.u || argv.url
 urls = typeof urls === 'string' ? [urls] : urls
-target  = argv.t || argv.target  || 3000
+target  = argv.t || argv.target  || 5000
 chrome  = argv.c || argv.chrome  || 9222
 profile = argv.p || argv.profile || '3gDsl'
 runs    = argv.r || argv.runs    || 2
+headless = argv.headless === 'true' || !!argv.headless
+autostart = (argv.a || argv.autostart) === 'false' ? false : true
 
 if (argv.h || argv.help) {
   die(help, 0)
@@ -182,4 +188,30 @@ if (profile === '3gDsl') {
 currentProfile = profile === '3gDsl' ? '3g' : profile
 currentUrl = urls[0]
 
-require('chrome-remote-interface')(hitChrome).on('error', die)
+if (!autostart) {
+  CDP(hitChrome).on('error', die)
+}
+
+launcher((err, launch) => {
+  if (err) return die(err)
+
+  const opts = {
+    browser: 'chrome',
+    options: ['--remote-debugging-port=9222']
+  }
+
+  if (headless) {
+    console.log(`
+    Note that network profiles are currently not working in headless
+    Cf https://bugs.chromium.org/p/chromium/issues/detail?id=728451
+    `)
+    opts.options.push('--headless')
+    opts.options.push('--disable-gpu')
+  }
+
+  launch('https://greta.io', opts, function (err, ps) {
+    if (err) die(err)
+    sleep(5000)
+    CDP(hitChrome).on('error', die)
+  })
+})

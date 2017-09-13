@@ -9,6 +9,4 @@ cache:
   directories:
     - node_modules
 script:
-  - google-chrome --headless --disable-gpu --remote-debugging-port=9222 &
-  - sleep 5
-  - node index.js -u "https://greta.io"
+  - node index.js --headless -u "https://greta.io"
