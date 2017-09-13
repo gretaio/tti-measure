@@ -3,8 +3,10 @@ node_js:
   - "7"
 dist: trusty
 sudo: false
+addons:
+  chrome: stable
 cache:
   directories:
     - node_modules
 script:
-  - node index.js -u "https://greta.io"
+  - node index.js --headless -u "https://greta.io"
