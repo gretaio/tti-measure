@@ -1,6 +1,6 @@
 {
-  "name": "tti-observer",
-  "version": "0.0.1",
+  "name": "tti-measure",
+  "version": "0.0.2",
   "description": "Automated, headless-able time-to-interactive measurement",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gretaio/tti-observer.git"
+    "url": "git+https://github.com/gretaio/tti-measure.git"
   },
   "keywords": [
     "tti",
@@ -20,9 +20,9 @@
     "tti-measure": "./index.js"
   },
   "bugs": {
-    "url": "https://github.com/gretaio/tti-observer/issues"
+    "url": "https://github.com/gretaio/tti-measure/issues"
   },
-  "homepage": "https://github.com/gretaio/tti-observer#readme",
+  "homepage": "https://github.com/gretaio/tti-measure#readme",
   "dependencies": {
     "chrome-remote-interface": "^0.24.5",
     "james-browser-launcher": "^1.3.1",
