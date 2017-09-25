@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const launcher = require('james-browser-launcher')
 const argv = require('yargs').argv
 const CDP = require('chrome-remote-interface')

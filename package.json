@@ -1,6 +1,6 @@
 {
   "name": "tti-measure",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Automated, headless-able time-to-interactive measurement",
   "main": "index.js",
   "scripts": {
