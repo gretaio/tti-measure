@@ -1,7 +1,7 @@
 tti-measure
 =============
 
-A simple script to measure the time-to-interactive of a remote or local website. See the [blogpost](https://medium.com/@pldubouilh/automated-time-to-interactive-measurement-cfd6d16e3b59) for more information and background.
+A simple script to measure the time-to-interactive of a remote or local website. See the [blogpost](https://blog.greta.io/automated-time-to-interactive-measurement-cfd6d16e3b59) for more information and background.
 
 ```
 🚀🚀 tti-measure 🚀🚀
